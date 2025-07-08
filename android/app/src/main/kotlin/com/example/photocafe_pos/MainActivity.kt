@@ -1,4 +1,4 @@
-package com.example.photocafe_pos
+package com.ajaparicio.photocafe_pos
 
 import io.flutter.embedding.android.FlutterActivity
 

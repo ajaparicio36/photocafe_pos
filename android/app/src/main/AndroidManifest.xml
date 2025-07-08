@@ -1,6 +1,30 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Camera permission -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    
+    <!-- Bluetooth permissions for thermal printer -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+    
+    <!-- Storage permissions for path_provider -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    
+    <!-- Network permission -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    
+    <!-- Wake lock for printer operations -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- USB permissions for USB thermal printers -->
+    <uses-permission android:name="android.permission.USB_PERMISSION" />
+    <uses-feature android:name="android.hardware.usb.host" android:required="false" />
+
     <application
-        android:label="photocafe_pos"
+        android:label="Photocafe"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
