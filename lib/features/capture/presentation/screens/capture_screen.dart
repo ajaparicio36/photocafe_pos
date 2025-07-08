@@ -201,10 +201,10 @@ class CaptureScreen extends ConsumerWidget {
           flex: state.hasRetake ? 1 : 2,
           child: ElevatedButton.icon(
             onPressed: () {
-              context.go('/apply-filter');
+              context.go('/print');
             },
-            icon: const Icon(Icons.arrow_forward),
-            label: const Text('Continue'),
+            icon: const Icon(Icons.print),
+            label: const Text('Print Photo'),
             style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(vertical: 16),
             ),

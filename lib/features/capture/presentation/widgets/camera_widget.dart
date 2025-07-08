@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:photocafe_pos/features/capture/domain/data/providers/capture_providers.dart';
 
 class CameraWidget extends ConsumerStatefulWidget {
   final VoidCallback? onImageCaptured;
@@ -88,6 +89,9 @@ class _CameraWidgetState extends ConsumerState<CameraWidget> {
       await image.saveTo(imagePath);
 
       if (mounted) {
+        // Save to capture state
+        ref.read(captureProvider.notifier).captureImage(imagePath);
+
         setState(() {
           _isCapturing = false;
           _countdown = 0;
