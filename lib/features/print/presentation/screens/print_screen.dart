@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -257,20 +259,20 @@ class _PrintScreenState extends ConsumerState<PrintScreen> {
           .read(printProvider.notifier)
           .printImage(context, printWidget, printer);
 
-      if (mounted) {
-        _showMessage(context, 'Print job sent successfully!');
+      if (!mounted) return;
 
-        // Navigate to thank you screen after successful print
-        Future.delayed(const Duration(seconds: 1), () {
-          if (mounted) {
-            context.go('/thank-you');
-          }
-        });
-      }
+      _showMessage(context, 'Print job sent successfully!');
+
+      // Navigate to thank you screen after successful print
+      Future.delayed(const Duration(seconds: 1), () {
+        if (mounted) {
+          context.go('/thank-you');
+        }
+      });
     } catch (e) {
-      if (mounted) {
-        _showMessage(context, 'Print failed: $e');
-      }
+      if (!mounted) return;
+
+      _showMessage(context, 'Print failed: $e');
     } finally {
       if (mounted) {
         setState(() => _isPrinting = false);
@@ -279,6 +281,8 @@ class _PrintScreenState extends ConsumerState<PrintScreen> {
   }
 
   void _showMessage(BuildContext context, String message) {
+    if (!mounted) return;
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
