@@ -260,11 +260,10 @@ class _PrintScreenState extends ConsumerState<PrintScreen> {
       if (mounted) {
         _showMessage(context, 'Print job sent successfully!');
 
-        // Reset and go back to start after successful print
-        Future.delayed(const Duration(seconds: 2), () {
+        // Navigate to thank you screen after successful print
+        Future.delayed(const Duration(seconds: 1), () {
           if (mounted) {
-            ref.read(captureProvider.notifier).reset();
-            context.go('/');
+            context.go('/thank-you');
           }
         });
       }

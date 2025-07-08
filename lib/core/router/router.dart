@@ -3,6 +3,7 @@ import 'package:photocafe_pos/features/capture/presentation/screens/capture_scre
 import 'package:photocafe_pos/features/print/presentation/screens/apply_filter_screen.dart';
 import 'package:photocafe_pos/features/print/presentation/screens/print_screen.dart';
 import 'package:photocafe_pos/features/start/presentation/screens/start_screen.dart';
+import 'package:photocafe_pos/features/start/presentation/screens/thank_you_screen.dart';
 
 final router = GoRouter(
   routes: [
@@ -31,6 +32,13 @@ final router = GoRouter(
       path: '/print',
       builder: (context, state) {
         return const PrintScreen();
+      },
+    ),
+
+    GoRoute(
+      path: '/thank-you',
+      builder: (context, state) {
+        return const ThankYouScreen();
       },
     ),
   ],
