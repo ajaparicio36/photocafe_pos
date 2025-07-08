@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CaptureState {
 
- ImageModel? get image; String? get filterPath; bool get isLoading; String? get error;
+ ImageModel? get image; String? get framePath; bool get hasRetake; bool get isLoading; String? get error;
 /// Create a copy of CaptureState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $CaptureStateCopyWith<CaptureState> get copyWith => _$CaptureStateCopyWithImpl<C
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CaptureState&&(identical(other.image, image) || other.image == image)&&(identical(other.filterPath, filterPath) || other.filterPath == filterPath)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.error, error) || other.error == error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CaptureState&&(identical(other.image, image) || other.image == image)&&(identical(other.framePath, framePath) || other.framePath == framePath)&&(identical(other.hasRetake, hasRetake) || other.hasRetake == hasRetake)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.error, error) || other.error == error));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,image,filterPath,isLoading,error);
+int get hashCode => Object.hash(runtimeType,image,framePath,hasRetake,isLoading,error);
 
 @override
 String toString() {
-  return 'CaptureState(image: $image, filterPath: $filterPath, isLoading: $isLoading, error: $error)';
+  return 'CaptureState(image: $image, framePath: $framePath, hasRetake: $hasRetake, isLoading: $isLoading, error: $error)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $CaptureStateCopyWith<$Res>  {
   factory $CaptureStateCopyWith(CaptureState value, $Res Function(CaptureState) _then) = _$CaptureStateCopyWithImpl;
 @useResult
 $Res call({
- ImageModel? image, String? filterPath, bool isLoading, String? error
+ ImageModel? image, String? framePath, bool hasRetake, bool isLoading, String? error
 });
 
 
@@ -65,11 +65,12 @@ class _$CaptureStateCopyWithImpl<$Res>
 
 /// Create a copy of CaptureState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? image = freezed,Object? filterPath = freezed,Object? isLoading = null,Object? error = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? image = freezed,Object? framePath = freezed,Object? hasRetake = null,Object? isLoading = null,Object? error = freezed,}) {
   return _then(_self.copyWith(
 image: freezed == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
-as ImageModel?,filterPath: freezed == filterPath ? _self.filterPath : filterPath // ignore: cast_nullable_to_non_nullable
-as String?,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
+as ImageModel?,framePath: freezed == framePath ? _self.framePath : framePath // ignore: cast_nullable_to_non_nullable
+as String?,hasRetake: null == hasRetake ? _self.hasRetake : hasRetake // ignore: cast_nullable_to_non_nullable
+as bool,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
@@ -165,10 +166,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ImageModel? image,  String? filterPath,  bool isLoading,  String? error)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ImageModel? image,  String? framePath,  bool hasRetake,  bool isLoading,  String? error)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CaptureState() when $default != null:
-return $default(_that.image,_that.filterPath,_that.isLoading,_that.error);case _:
+return $default(_that.image,_that.framePath,_that.hasRetake,_that.isLoading,_that.error);case _:
   return orElse();
 
 }
@@ -186,10 +187,10 @@ return $default(_that.image,_that.filterPath,_that.isLoading,_that.error);case _
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ImageModel? image,  String? filterPath,  bool isLoading,  String? error)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ImageModel? image,  String? framePath,  bool hasRetake,  bool isLoading,  String? error)  $default,) {final _that = this;
 switch (_that) {
 case _CaptureState():
-return $default(_that.image,_that.filterPath,_that.isLoading,_that.error);}
+return $default(_that.image,_that.framePath,_that.hasRetake,_that.isLoading,_that.error);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -203,10 +204,10 @@ return $default(_that.image,_that.filterPath,_that.isLoading,_that.error);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ImageModel? image,  String? filterPath,  bool isLoading,  String? error)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ImageModel? image,  String? framePath,  bool hasRetake,  bool isLoading,  String? error)?  $default,) {final _that = this;
 switch (_that) {
 case _CaptureState() when $default != null:
-return $default(_that.image,_that.filterPath,_that.isLoading,_that.error);case _:
+return $default(_that.image,_that.framePath,_that.hasRetake,_that.isLoading,_that.error);case _:
   return null;
 
 }
@@ -218,11 +219,12 @@ return $default(_that.image,_that.filterPath,_that.isLoading,_that.error);case _
 @JsonSerializable()
 
 class _CaptureState implements CaptureState {
-  const _CaptureState({this.image, this.filterPath, this.isLoading = false, this.error});
+  const _CaptureState({this.image, this.framePath, this.hasRetake = false, this.isLoading = false, this.error});
   factory _CaptureState.fromJson(Map<String, dynamic> json) => _$CaptureStateFromJson(json);
 
 @override final  ImageModel? image;
-@override final  String? filterPath;
+@override final  String? framePath;
+@override@JsonKey() final  bool hasRetake;
 @override@JsonKey() final  bool isLoading;
 @override final  String? error;
 
@@ -239,16 +241,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CaptureState&&(identical(other.image, image) || other.image == image)&&(identical(other.filterPath, filterPath) || other.filterPath == filterPath)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.error, error) || other.error == error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CaptureState&&(identical(other.image, image) || other.image == image)&&(identical(other.framePath, framePath) || other.framePath == framePath)&&(identical(other.hasRetake, hasRetake) || other.hasRetake == hasRetake)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.error, error) || other.error == error));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,image,filterPath,isLoading,error);
+int get hashCode => Object.hash(runtimeType,image,framePath,hasRetake,isLoading,error);
 
 @override
 String toString() {
-  return 'CaptureState(image: $image, filterPath: $filterPath, isLoading: $isLoading, error: $error)';
+  return 'CaptureState(image: $image, framePath: $framePath, hasRetake: $hasRetake, isLoading: $isLoading, error: $error)';
 }
 
 
@@ -259,7 +261,7 @@ abstract mixin class _$CaptureStateCopyWith<$Res> implements $CaptureStateCopyWi
   factory _$CaptureStateCopyWith(_CaptureState value, $Res Function(_CaptureState) _then) = __$CaptureStateCopyWithImpl;
 @override @useResult
 $Res call({
- ImageModel? image, String? filterPath, bool isLoading, String? error
+ ImageModel? image, String? framePath, bool hasRetake, bool isLoading, String? error
 });
 
 
@@ -276,11 +278,12 @@ class __$CaptureStateCopyWithImpl<$Res>
 
 /// Create a copy of CaptureState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? image = freezed,Object? filterPath = freezed,Object? isLoading = null,Object? error = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? image = freezed,Object? framePath = freezed,Object? hasRetake = null,Object? isLoading = null,Object? error = freezed,}) {
   return _then(_CaptureState(
 image: freezed == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
-as ImageModel?,filterPath: freezed == filterPath ? _self.filterPath : filterPath // ignore: cast_nullable_to_non_nullable
-as String?,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
+as ImageModel?,framePath: freezed == framePath ? _self.framePath : framePath // ignore: cast_nullable_to_non_nullable
+as String?,hasRetake: null == hasRetake ? _self.hasRetake : hasRetake // ignore: cast_nullable_to_non_nullable
+as bool,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as String?,
   ));

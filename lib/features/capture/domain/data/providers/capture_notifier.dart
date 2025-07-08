@@ -13,11 +13,19 @@ class CaptureNotifier extends Notifier<CaptureState> {
     state = state.copyWith(image: image, isLoading: false);
   }
 
-  void applyFilter(String filterPath) {
-    state = state.copyWith(filterPath: filterPath, isLoading: false);
+  void retakeImage() {
+    state = state.copyWith(image: null, hasRetake: false, isLoading: false);
+  }
+
+  void applyFrame(String framePath) {
+    state = state.copyWith(framePath: framePath, isLoading: false);
+  }
+
+  void removeFrame() {
+    state = state.copyWith(framePath: null, isLoading: false);
   }
 
   void reset() {
-    state = state.copyWith(image: null, isLoading: false);
+    state = state.copyWith(image: null, framePath: null, isLoading: false);
   }
 }

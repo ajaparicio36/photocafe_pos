@@ -8,7 +8,8 @@ part 'capture_state.g.dart';
 sealed class CaptureState with _$CaptureState {
   const factory CaptureState({
     ImageModel? image,
-    String? filterPath,
+    String? framePath,
+    @Default(true) bool hasRetake,
     @Default(false) bool isLoading,
     String? error,
   }) = _CaptureState;

@@ -15,8 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ImageModel {
 
- String get imagePath;// Changed from XFile to String
- DateTime get capturedAt;
+ String get imagePath; DateTime get capturedAt;
 /// Create a copy of ImageModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -209,7 +208,6 @@ class _ImageModel implements ImageModel {
   factory _ImageModel.fromJson(Map<String, dynamic> json) => _$ImageModelFromJson(json);
 
 @override final  String imagePath;
-// Changed from XFile to String
 @override final  DateTime capturedAt;
 
 /// Create a copy of ImageModel

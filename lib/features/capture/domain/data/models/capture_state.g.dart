@@ -11,7 +11,8 @@ _CaptureState _$CaptureStateFromJson(Map<String, dynamic> json) =>
       image: json['image'] == null
           ? null
           : ImageModel.fromJson(json['image'] as Map<String, dynamic>),
-      filterPath: json['filterPath'] as String?,
+      framePath: json['framePath'] as String?,
+      hasRetake: json['hasRetake'] as bool? ?? false,
       isLoading: json['isLoading'] as bool? ?? false,
       error: json['error'] as String?,
     );
@@ -19,7 +20,8 @@ _CaptureState _$CaptureStateFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$CaptureStateToJson(_CaptureState instance) =>
     <String, dynamic>{
       'image': instance.image,
-      'filterPath': instance.filterPath,
+      'framePath': instance.framePath,
+      'hasRetake': instance.hasRetake,
       'isLoading': instance.isLoading,
       'error': instance.error,
     };
