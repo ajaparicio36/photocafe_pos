@@ -219,7 +219,7 @@ return $default(_that.image,_that.framePath,_that.hasRetake,_that.isLoading,_tha
 @JsonSerializable()
 
 class _CaptureState implements CaptureState {
-  const _CaptureState({this.image, this.framePath, this.hasRetake = false, this.isLoading = false, this.error});
+  const _CaptureState({this.image, this.framePath, this.hasRetake = true, this.isLoading = false, this.error});
   factory _CaptureState.fromJson(Map<String, dynamic> json) => _$CaptureStateFromJson(json);
 
 @override final  ImageModel? image;

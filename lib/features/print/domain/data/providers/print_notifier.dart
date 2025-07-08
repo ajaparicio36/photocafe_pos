@@ -13,11 +13,7 @@ class PrintNotifier extends StreamNotifier<PrinterState> {
   @override
   Stream<PrinterState> build() async* {
     await _flutterThermalPrinter.getPrinters(
-      connectionTypes: [
-        ConnectionType.USB,
-        ConnectionType.BLE,
-        ConnectionType.NETWORK,
-      ],
+      connectionTypes: [ConnectionType.BLE],
     );
 
     yield* _flutterThermalPrinter.devicesStream.asyncMap((printers) {
@@ -32,11 +28,16 @@ class PrintNotifier extends StreamNotifier<PrinterState> {
     Widget widget,
     Printer printer,
   ) async {
-    await _flutterThermalPrinter.printWidget(
-      context,
-      printer: printer,
-      widget: widget,
-    );
+    try {
+      await _flutterThermalPrinter.printWidget(
+        context,
+        printer: printer,
+        widget: widget,
+      );
+    } catch (e) {
+      debugPrint('Print error: $e');
+      rethrow;
+    }
   }
 
   void stopScan() {

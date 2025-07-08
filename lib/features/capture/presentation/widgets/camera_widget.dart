@@ -8,8 +8,13 @@ import 'package:photocafe_pos/features/capture/domain/data/providers/capture_pro
 
 class CameraWidget extends ConsumerStatefulWidget {
   final VoidCallback? onImageCaptured;
+  final String cameraOrientation;
 
-  const CameraWidget({super.key, this.onImageCaptured});
+  const CameraWidget({
+    super.key,
+    this.onImageCaptured,
+    this.cameraOrientation = 'front',
+  });
 
   @override
   ConsumerState<CameraWidget> createState() => _CameraWidgetState();
@@ -29,6 +34,14 @@ class _CameraWidgetState extends ConsumerState<CameraWidget> {
     _initializeCamera();
   }
 
+  @override
+  void didUpdateWidget(CameraWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.cameraOrientation != widget.cameraOrientation) {
+      _initializeCamera();
+    }
+  }
+
   Future<void> _initializeCamera() async {
     // Request camera permission
     final status = await Permission.camera.request();
@@ -39,8 +52,31 @@ class _CameraWidgetState extends ConsumerState<CameraWidget> {
     try {
       _cameras = await availableCameras();
       if (_cameras!.isNotEmpty) {
+        // Select camera based on orientation preference
+        CameraDescription selectedCamera =
+            _cameras![0]; // Default to first camera
+
+        if (widget.cameraOrientation == 'front') {
+          // Look for front camera
+          final frontCameras = _cameras!.where(
+            (camera) => camera.lensDirection == CameraLensDirection.front,
+          );
+          if (frontCameras.isNotEmpty) {
+            selectedCamera = frontCameras.first;
+          }
+        } else {
+          // Look for back camera
+          final backCameras = _cameras!.where(
+            (camera) => camera.lensDirection == CameraLensDirection.back,
+          );
+          if (backCameras.isNotEmpty) {
+            selectedCamera = backCameras.first;
+          }
+        }
+
+        _controller?.dispose();
         _controller = CameraController(
-          _cameras![0],
+          selectedCamera,
           ResolutionPreset.high,
           enableAudio: false,
         );
@@ -121,7 +157,7 @@ class _CameraWidgetState extends ConsumerState<CameraWidget> {
       return Container(
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
-          borderRadius: BorderRadius.circular(22.4),
+          borderRadius: BorderRadius.circular(12),
         ),
         child: const Center(child: CircularProgressIndicator()),
       );
@@ -132,14 +168,14 @@ class _CameraWidgetState extends ConsumerState<CameraWidget> {
         // Camera preview
         Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(22.4),
+            borderRadius: BorderRadius.circular(12),
             border: Border.all(
               color: Theme.of(context).colorScheme.outline,
-              width: 2,
+              width: 1,
             ),
           ),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(20.4),
+            borderRadius: BorderRadius.circular(11),
             child: CameraPreview(_controller!),
           ),
         ),
@@ -149,12 +185,12 @@ class _CameraWidgetState extends ConsumerState<CameraWidget> {
           Container(
             decoration: BoxDecoration(
               color: Colors.black.withOpacity(0.7),
-              borderRadius: BorderRadius.circular(22.4),
+              borderRadius: BorderRadius.circular(12),
             ),
             child: Center(
               child: Container(
-                width: 120,
-                height: 120,
+                width: 80,
+                height: 80,
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.primary,
                   shape: BoxShape.circle,
@@ -164,7 +200,7 @@ class _CameraWidgetState extends ConsumerState<CameraWidget> {
                     '$_countdown',
                     style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                       color: Theme.of(context).colorScheme.onPrimary,
-                      fontSize: 48,
+                      fontSize: 36,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -176,27 +212,27 @@ class _CameraWidgetState extends ConsumerState<CameraWidget> {
         // Capture button
         if (!_isCapturing)
           Positioned(
-            bottom: 24,
+            bottom: 16,
             left: 0,
             right: 0,
             child: Center(
               child: GestureDetector(
                 onTap: _startCountdownAndCapture,
                 child: Container(
-                  width: 80,
-                  height: 80,
+                  width: 60,
+                  height: 60,
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.primary,
                     shape: BoxShape.circle,
                     border: Border.all(
                       color: Theme.of(context).colorScheme.onPrimary,
-                      width: 4,
+                      width: 3,
                     ),
                   ),
                   child: Icon(
                     Icons.camera_alt,
                     color: Theme.of(context).colorScheme.onPrimary,
-                    size: 32,
+                    size: 24,
                   ),
                 ),
               ),

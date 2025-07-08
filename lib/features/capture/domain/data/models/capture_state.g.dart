@@ -12,7 +12,7 @@ _CaptureState _$CaptureStateFromJson(Map<String, dynamic> json) =>
           ? null
           : ImageModel.fromJson(json['image'] as Map<String, dynamic>),
       framePath: json['framePath'] as String?,
-      hasRetake: json['hasRetake'] as bool? ?? false,
+      hasRetake: json['hasRetake'] as bool? ?? true,
       isLoading: json['isLoading'] as bool? ?? false,
       error: json['error'] as String?,
     );
