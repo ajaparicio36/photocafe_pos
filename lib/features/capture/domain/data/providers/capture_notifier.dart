@@ -5,16 +5,24 @@ import 'package:photocafe_pos/features/capture/domain/data/models/image_model.da
 class CaptureNotifier extends Notifier<CaptureState> {
   @override
   CaptureState build() {
-    return CaptureState();
+    return const CaptureState();
   }
 
   void captureImage(String imagePath) {
     final image = ImageModel(imagePath: imagePath, capturedAt: DateTime.now());
-    state = state.copyWith(image: image, isLoading: false);
+    state = state.copyWith(
+      image: image, 
+      isLoading: false,
+      hasRetake: true,
+    );
   }
 
   void retakeImage() {
-    state = state.copyWith(image: null, hasRetake: false, isLoading: false);
+    state = state.copyWith(
+      image: null, 
+      hasRetake: false, 
+      isLoading: false,
+    );
   }
 
   void applyFrame(String framePath) {
