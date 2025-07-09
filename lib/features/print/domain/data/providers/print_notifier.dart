@@ -104,38 +104,6 @@ class PrintNotifier extends StreamNotifier<PrinterState> {
     debugPrint('Print job sent successfully via printWidget');
   }
 
-  Future<Widget> _applyPhotoFilters(Widget originalWidget) async {
-    return Container(
-      color: Colors.white,
-      child: SizedBox(
-        width: 384, // 58mm paper width in dots
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Transform.scale(
-              scale: 0.32,
-              alignment: Alignment.topLeft,
-              child: ColorFiltered(
-                colorFilter: ColorFilter.mode(
-                  Colors.white,
-                  BlendMode.difference,
-                ),
-                child: ColorFiltered(
-                  colorFilter: ColorFilter.mode(
-                    Colors.transparent,
-                    BlendMode.saturation,
-                  ),
-                  child: originalWidget,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   void stopScan() {
     _flutterThermalPrinter.stopScan();
     _devicesStreamSubscription?.cancel();

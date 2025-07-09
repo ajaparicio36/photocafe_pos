@@ -72,11 +72,6 @@ class _PrintScreenState extends ConsumerState<PrintScreen> {
 
             const SizedBox(height: 16),
 
-            // Printer status
-            _buildPrinterStatus(context, printerState, settingsState),
-
-            const SizedBox(height: 12),
-
             // Action buttons
             _buildActionButtons(
               context,
@@ -119,7 +114,7 @@ class _PrintScreenState extends ConsumerState<PrintScreen> {
                 child: Center(
                   child: SingleChildScrollView(
                     child: Transform.scale(
-                      scale: 0.7,
+                      scale: 2,
                       child: ImageWidget(imagePath: imagePath),
                     ),
                   ),
@@ -162,67 +157,67 @@ class _PrintScreenState extends ConsumerState<PrintScreen> {
     );
   }
 
-  Widget _buildPrinterStatus(
-    BuildContext context,
-    AsyncValue printerState,
-    SettingsState settingsState,
-  ) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceVariant,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Theme.of(context).colorScheme.outline.withOpacity(0.5),
-        ),
-      ),
-      child: Row(
-        children: [
-          Icon(
-            printerState.when(
-              data: (state) => state.connectedPrinters.isNotEmpty
-                  ? Icons.print
-                  : Icons.print_disabled,
-              loading: () => Icons.search,
-              error: (_, __) => Icons.error,
-            ),
-            color: Theme.of(context).colorScheme.onSurfaceVariant,
-            size: 18,
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  printerState.when(
-                    data: (state) => state.connectedPrinters.isNotEmpty
-                        ? '${state.connectedPrinters.length} printer(s) available'
-                        : 'No printers found',
-                    loading: () => 'Searching for printers...',
-                    error: (error, _) => 'Error: $error',
-                  ),
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
-                ),
-                if (settingsState.selectedPrinter != null) ...[
-                  const SizedBox(height: 2),
-                  Text(
-                    'Selected: ${settingsState.selectedPrinter}',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildPrinterStatus(
+  //   BuildContext context,
+  //   AsyncValue printerState,
+  //   SettingsState settingsState,
+  // ) {
+  //   return Container(
+  //     padding: const EdgeInsets.all(12),
+  //     decoration: BoxDecoration(
+  //       color: Theme.of(context).colorScheme.surfaceVariant,
+  //       borderRadius: BorderRadius.circular(12),
+  //       border: Border.all(
+  //         color: Theme.of(context).colorScheme.outline.withOpacity(0.5),
+  //       ),
+  //     ),
+  //     child: Row(
+  //       children: [
+  //         Icon(
+  //           printerState.when(
+  //             data: (state) => state.connectedPrinters.isNotEmpty
+  //                 ? Icons.print
+  //                 : Icons.print_disabled,
+  //             loading: () => Icons.search,
+  //             error: (_, __) => Icons.error,
+  //           ),
+  //           color: Theme.of(context).colorScheme.onSurfaceVariant,
+  //           size: 18,
+  //         ),
+  //         const SizedBox(width: 8),
+  //         // Expanded(
+  //         //   child: Column(
+  //         //     crossAxisAlignment: CrossAxisAlignment.start,
+  //         //     children: [
+  //         //       Text(
+  //         //         printerState.when(
+  //         //           data: (state) => state.connectedPrinters.isNotEmpty
+  //         //               ? '${state.connectedPrinters.length} printer(s) available'
+  //         //               : 'No printers found',
+  //         //           loading: () => 'Searching for printers...',
+  //         //           error: (error, _) => 'Error: $error',
+  //         //         ),
+  //         //         style: Theme.of(context).textTheme.bodySmall?.copyWith(
+  //         //           color: Theme.of(context).colorScheme.onSurfaceVariant,
+  //         //         ),
+  //         //       ),
+  //         //       if (settingsState.selectedPrinter != null) ...[
+  //         //         const SizedBox(height: 2),
+  //         //         Text(
+  //         //           'Selected: ${settingsState.selectedPrinter}',
+  //         //           style: Theme.of(context).textTheme.bodySmall?.copyWith(
+  //         //             color: Theme.of(context).colorScheme.primary,
+  //         //             fontWeight: FontWeight.w500,
+  //         //           ),
+  //         //         ),
+  //         //       ],
+  //         //     ],
+  //         //   ),
+  //         // ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget _buildActionButtons(
     BuildContext context,
@@ -315,14 +310,6 @@ class _PrintScreenState extends ConsumerState<PrintScreen> {
 
       await printNotifier.printImage(context, printWidget, selectedPrinter!);
 
-      if (!mounted) return;
-
-      _showMessage(
-        context,
-        'Print job sent successfully to ${selectedPrinter.name}!',
-      );
-
-      // Navigate to thank you screen after successful print
       context.go('/thank-you');
     } catch (e) {
       if (!mounted) return;

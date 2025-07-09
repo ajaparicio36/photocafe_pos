@@ -83,7 +83,7 @@ class StartScreen extends ConsumerWidget {
       elevation: 8,
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.all(32),
+        padding: const EdgeInsets.all(4),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
