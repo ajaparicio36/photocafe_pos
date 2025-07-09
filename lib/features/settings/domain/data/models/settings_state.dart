@@ -7,6 +7,7 @@ part 'settings_state.g.dart';
 sealed class SettingsState with _$SettingsState {
   const factory SettingsState({
     String? selectedPrinter,
+    String? selectedPrinterAddress,
     @Default('front') String cameraOrientation,
   }) = _SettingsState;
 

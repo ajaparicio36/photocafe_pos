@@ -16,76 +16,73 @@ class ImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width ?? 384, // Standard thermal printer width
-      height: height,
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(4), // Slightly more padding
       decoration: const BoxDecoration(color: Colors.white),
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center, // Align to start
         children: [
           // Header
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 8),
+            padding: const EdgeInsets.symmetric(vertical: 2),
             child: const Text(
               'PHOTOCAFE POS',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 12, // Bigger font
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
-                letterSpacing: 2,
+                letterSpacing: 1,
               ),
-              textAlign: TextAlign.center,
             ),
           ),
 
-          const Divider(color: Colors.black, thickness: 2),
+          const SizedBox(height: 2),
 
-          const SizedBox(height: 8),
-
-          // Image
+          // Image - bigger size
           Container(
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.black, width: 2),
+              border: Border.all(color: Colors.black, width: 1),
             ),
             child: ColorFiltered(
               colorFilter: const ColorFilter.matrix([
-                0.2126, 0.7152, 0.0722, 0, 0, // Red channel
-                0.2126, 0.7152, 0.0722, 0, 0, // Green channel
-                0.2126, 0.7152, 0.0722, 0, 0, // Blue channel
-                0, 0, 0, 1, 0, // Alpha channel
+                // More subtle grayscale conversion for better detail
+                0.299, 0.587, 0.114, 0, 30, // Red - reduced brightness offset
+                0.299, 0.587, 0.114, 0, 30, // Green - reduced brightness offset
+                0.299, 0.587, 0.114, 0, 30, // Blue - reduced brightness offset
+                0, 0, 0, 1, 0, // Alpha
               ]),
               child: Image.file(
                 File(imagePath),
-                width: 320,
-                height: 240,
+                width: 120,
+                height: 200,
                 fit: BoxFit.cover,
               ),
             ),
           ),
 
-          const SizedBox(height: 8),
-
-          // Footer
-          const Divider(color: Colors.black, thickness: 1),
+          const SizedBox(height: 2),
 
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 8),
+            padding: const EdgeInsets.symmetric(vertical: 2),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start, // Align to start
               children: [
                 Text(
                   'Printed on ${_formatDate(DateTime.now())}',
-                  style: const TextStyle(fontSize: 12, color: Colors.black),
-                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 8,
+                    color: Colors.black,
+                  ), // Bigger font
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 1),
                 const Text(
                   'Thank you for visiting PhotoCafe!',
                   style: TextStyle(
-                    fontSize: 10,
+                    fontSize: 8, // Bigger font
                     color: Colors.black,
                     fontStyle: FontStyle.italic,
                   ),
-                  textAlign: TextAlign.center,
                 ),
               ],
             ),

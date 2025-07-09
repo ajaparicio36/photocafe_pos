@@ -287,24 +287,25 @@ class _PrintScreenState extends ConsumerState<PrintScreen> {
     AsyncValue printerState,
     SettingsState settingsState,
   ) async {
+    final printNotifier = ref.read(printProvider.notifier);
     final state = printerState.value;
     if (state?.connectedPrinters.isEmpty ?? true) {
       _showMessage(context, 'No printers available');
       return;
     }
 
-    // Find the selected printer from settings
+    // Find the selected printer from settings using address
     Printer? selectedPrinter;
-    if (settingsState.selectedPrinter != null) {
+    if (settingsState.selectedPrinterAddress != null) {
       final matchingPrinters = state!.connectedPrinters.where(
-        (p) => p.name == settingsState.selectedPrinter,
+        (p) => p.address == settingsState.selectedPrinterAddress,
       );
       if (matchingPrinters.isNotEmpty) {
         selectedPrinter = matchingPrinters.first;
       }
     }
 
-    // If no printer selected in settings, use the first available
+    // If no printer selected in settings or not found, use the first available
     selectedPrinter ??= state!.connectedPrinters.first;
 
     setState(() => _isPrinting = true);
@@ -312,9 +313,7 @@ class _PrintScreenState extends ConsumerState<PrintScreen> {
     try {
       final printWidget = ImageWidget(imagePath: imagePath);
 
-      await ref
-          .read(printProvider.notifier)
-          .printImage(context, printWidget, selectedPrinter!);
+      await printNotifier.printImage(context, printWidget, selectedPrinter!);
 
       if (!mounted) return;
 
@@ -324,16 +323,11 @@ class _PrintScreenState extends ConsumerState<PrintScreen> {
       );
 
       // Navigate to thank you screen after successful print
-      Future.delayed(const Duration(seconds: 1), () {
-        if (mounted) {
-          context.go('/thank-you');
-        }
-      });
+      context.go('/thank-you');
     } catch (e) {
       if (!mounted) return;
 
       _showMessage(context, 'Print failed: $e');
-    } finally {
       if (mounted) {
         setState(() => _isPrinting = false);
       }

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SettingsState {
 
- String? get selectedPrinter; String get cameraOrientation;
+ String? get selectedPrinter; String? get selectedPrinterAddress; String get cameraOrientation;
 /// Create a copy of SettingsState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $SettingsStateCopyWith<SettingsState> get copyWith => _$SettingsStateCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SettingsState&&(identical(other.selectedPrinter, selectedPrinter) || other.selectedPrinter == selectedPrinter)&&(identical(other.cameraOrientation, cameraOrientation) || other.cameraOrientation == cameraOrientation));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SettingsState&&(identical(other.selectedPrinter, selectedPrinter) || other.selectedPrinter == selectedPrinter)&&(identical(other.selectedPrinterAddress, selectedPrinterAddress) || other.selectedPrinterAddress == selectedPrinterAddress)&&(identical(other.cameraOrientation, cameraOrientation) || other.cameraOrientation == cameraOrientation));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,selectedPrinter,cameraOrientation);
+int get hashCode => Object.hash(runtimeType,selectedPrinter,selectedPrinterAddress,cameraOrientation);
 
 @override
 String toString() {
-  return 'SettingsState(selectedPrinter: $selectedPrinter, cameraOrientation: $cameraOrientation)';
+  return 'SettingsState(selectedPrinter: $selectedPrinter, selectedPrinterAddress: $selectedPrinterAddress, cameraOrientation: $cameraOrientation)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $SettingsStateCopyWith<$Res>  {
   factory $SettingsStateCopyWith(SettingsState value, $Res Function(SettingsState) _then) = _$SettingsStateCopyWithImpl;
 @useResult
 $Res call({
- String? selectedPrinter, String cameraOrientation
+ String? selectedPrinter, String? selectedPrinterAddress, String cameraOrientation
 });
 
 
@@ -65,9 +65,10 @@ class _$SettingsStateCopyWithImpl<$Res>
 
 /// Create a copy of SettingsState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? selectedPrinter = freezed,Object? cameraOrientation = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? selectedPrinter = freezed,Object? selectedPrinterAddress = freezed,Object? cameraOrientation = null,}) {
   return _then(_self.copyWith(
 selectedPrinter: freezed == selectedPrinter ? _self.selectedPrinter : selectedPrinter // ignore: cast_nullable_to_non_nullable
+as String?,selectedPrinterAddress: freezed == selectedPrinterAddress ? _self.selectedPrinterAddress : selectedPrinterAddress // ignore: cast_nullable_to_non_nullable
 as String?,cameraOrientation: null == cameraOrientation ? _self.cameraOrientation : cameraOrientation // ignore: cast_nullable_to_non_nullable
 as String,
   ));
@@ -151,10 +152,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? selectedPrinter,  String cameraOrientation)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? selectedPrinter,  String? selectedPrinterAddress,  String cameraOrientation)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SettingsState() when $default != null:
-return $default(_that.selectedPrinter,_that.cameraOrientation);case _:
+return $default(_that.selectedPrinter,_that.selectedPrinterAddress,_that.cameraOrientation);case _:
   return orElse();
 
 }
@@ -172,10 +173,10 @@ return $default(_that.selectedPrinter,_that.cameraOrientation);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? selectedPrinter,  String cameraOrientation)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? selectedPrinter,  String? selectedPrinterAddress,  String cameraOrientation)  $default,) {final _that = this;
 switch (_that) {
 case _SettingsState():
-return $default(_that.selectedPrinter,_that.cameraOrientation);}
+return $default(_that.selectedPrinter,_that.selectedPrinterAddress,_that.cameraOrientation);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -189,10 +190,10 @@ return $default(_that.selectedPrinter,_that.cameraOrientation);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? selectedPrinter,  String cameraOrientation)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? selectedPrinter,  String? selectedPrinterAddress,  String cameraOrientation)?  $default,) {final _that = this;
 switch (_that) {
 case _SettingsState() when $default != null:
-return $default(_that.selectedPrinter,_that.cameraOrientation);case _:
+return $default(_that.selectedPrinter,_that.selectedPrinterAddress,_that.cameraOrientation);case _:
   return null;
 
 }
@@ -204,10 +205,11 @@ return $default(_that.selectedPrinter,_that.cameraOrientation);case _:
 @JsonSerializable()
 
 class _SettingsState implements SettingsState {
-  const _SettingsState({this.selectedPrinter, this.cameraOrientation = 'front'});
+  const _SettingsState({this.selectedPrinter, this.selectedPrinterAddress, this.cameraOrientation = 'front'});
   factory _SettingsState.fromJson(Map<String, dynamic> json) => _$SettingsStateFromJson(json);
 
 @override final  String? selectedPrinter;
+@override final  String? selectedPrinterAddress;
 @override@JsonKey() final  String cameraOrientation;
 
 /// Create a copy of SettingsState
@@ -223,16 +225,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SettingsState&&(identical(other.selectedPrinter, selectedPrinter) || other.selectedPrinter == selectedPrinter)&&(identical(other.cameraOrientation, cameraOrientation) || other.cameraOrientation == cameraOrientation));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SettingsState&&(identical(other.selectedPrinter, selectedPrinter) || other.selectedPrinter == selectedPrinter)&&(identical(other.selectedPrinterAddress, selectedPrinterAddress) || other.selectedPrinterAddress == selectedPrinterAddress)&&(identical(other.cameraOrientation, cameraOrientation) || other.cameraOrientation == cameraOrientation));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,selectedPrinter,cameraOrientation);
+int get hashCode => Object.hash(runtimeType,selectedPrinter,selectedPrinterAddress,cameraOrientation);
 
 @override
 String toString() {
-  return 'SettingsState(selectedPrinter: $selectedPrinter, cameraOrientation: $cameraOrientation)';
+  return 'SettingsState(selectedPrinter: $selectedPrinter, selectedPrinterAddress: $selectedPrinterAddress, cameraOrientation: $cameraOrientation)';
 }
 
 
@@ -243,7 +245,7 @@ abstract mixin class _$SettingsStateCopyWith<$Res> implements $SettingsStateCopy
   factory _$SettingsStateCopyWith(_SettingsState value, $Res Function(_SettingsState) _then) = __$SettingsStateCopyWithImpl;
 @override @useResult
 $Res call({
- String? selectedPrinter, String cameraOrientation
+ String? selectedPrinter, String? selectedPrinterAddress, String cameraOrientation
 });
 
 
@@ -260,9 +262,10 @@ class __$SettingsStateCopyWithImpl<$Res>
 
 /// Create a copy of SettingsState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? selectedPrinter = freezed,Object? cameraOrientation = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? selectedPrinter = freezed,Object? selectedPrinterAddress = freezed,Object? cameraOrientation = null,}) {
   return _then(_SettingsState(
 selectedPrinter: freezed == selectedPrinter ? _self.selectedPrinter : selectedPrinter // ignore: cast_nullable_to_non_nullable
+as String?,selectedPrinterAddress: freezed == selectedPrinterAddress ? _self.selectedPrinterAddress : selectedPrinterAddress // ignore: cast_nullable_to_non_nullable
 as String?,cameraOrientation: null == cameraOrientation ? _self.cameraOrientation : cameraOrientation // ignore: cast_nullable_to_non_nullable
 as String,
   ));

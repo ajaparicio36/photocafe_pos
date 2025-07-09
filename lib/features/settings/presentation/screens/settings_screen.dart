@@ -39,9 +39,21 @@ class SettingsScreen extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Printer Settings',
-                      style: Theme.of(context).textTheme.titleMedium,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Printer Settings',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        IconButton(
+                          onPressed: () => ref
+                              .read(printProvider.notifier)
+                              .refreshPrinters(),
+                          icon: const Icon(Icons.refresh),
+                          tooltip: 'Refresh Printers',
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 12),
                     _buildPrinterSelector(
@@ -120,7 +132,8 @@ class SettingsScreen extends ConsumerWidget {
 
         return Column(
           children: state.connectedPrinters.map<Widget>((printer) {
-            final isSelected = settingsState.selectedPrinter == printer.name;
+            final isSelected =
+                settingsState.selectedPrinterAddress == printer.address;
             return ListTile(
               dense: true,
               contentPadding: const EdgeInsets.symmetric(horizontal: 8),
@@ -144,7 +157,10 @@ class SettingsScreen extends ConsumerWidget {
               onTap: () {
                 ref
                     .read(settingsProvider.notifier)
-                    .setSelectedPrinter(printer.name);
+                    .setSelectedPrinter(
+                      printerName: printer.name,
+                      printerAddress: printer.address,
+                    );
               },
             );
           }).toList(),

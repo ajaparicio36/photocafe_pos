@@ -11,15 +11,20 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
     final prefs = await SharedPreferences.getInstance();
 
     final selectedPrinter = prefs.getString('selected_printer');
+    final selectedPrinterAddress = prefs.getString('selected_printer_address');
     final cameraOrientation = prefs.getString('camera_orientation') ?? 'front';
 
     state = state.copyWith(
       selectedPrinter: selectedPrinter,
+      selectedPrinterAddress: selectedPrinterAddress,
       cameraOrientation: cameraOrientation,
     );
   }
 
-  Future<void> setSelectedPrinter(String? printerName) async {
+  Future<void> setSelectedPrinter({
+    String? printerName,
+    String? printerAddress,
+  }) async {
     final prefs = await SharedPreferences.getInstance();
 
     if (printerName != null) {
@@ -28,7 +33,16 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
       await prefs.remove('selected_printer');
     }
 
-    state = state.copyWith(selectedPrinter: printerName);
+    if (printerAddress != null) {
+      await prefs.setString('selected_printer_address', printerAddress);
+    } else {
+      await prefs.remove('selected_printer_address');
+    }
+
+    state = state.copyWith(
+      selectedPrinter: printerName,
+      selectedPrinterAddress: printerAddress,
+    );
   }
 
   Future<void> setCameraOrientation(String orientation) async {
